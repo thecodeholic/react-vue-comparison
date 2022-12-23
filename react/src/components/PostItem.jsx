@@ -1,14 +1,32 @@
 import PropTypes from 'prop-types';
 
-export default function PostItem({post}) {
+export default function PostItem({
+  post, 
+  onDelete = () => {}
+}) {
+
+  function deletePost(post) {
+    if (!window.confirm('Are you sure you want to delete post?')) {
+      return;
+    }
+
+    fetch(`https://jsonplaceholder.typicode.com/posts/${post.id}`).then(
+      (res) => {
+        if (res.status === 200) {
+          onDelete(post);
+        }
+      }
+    );
+  }
+
   return (
     <div className='card mb-4'>
       <div className="card-body">
         <h5 className='post-title'>{post.title}</h5>
         <p className='post-body'>{post.body}</p>
-        <div class="text-end">
-          <button class="btn btn-primary me-2">Edit</button>
-          <button class="btn btn-danger">Delete</button>
+        <div className="text-end">
+          <button className="btn btn-primary me-2">Edit</button>
+          <button onClick={() => deletePost(post)} className="btn btn-danger">Delete</button>
         </div>
       </div>
     </div>

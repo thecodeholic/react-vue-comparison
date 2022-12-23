@@ -1,6 +1,9 @@
 <template>
   <div>
-    <PostItem v-for="post of postList" :key="post.id" :post="post">
+    <PostItem v-for="post of postList" 
+            :key="post.id" 
+            :post="post"
+            @delete="onDelete">
     </PostItem>
   </div>
 </template>
@@ -19,6 +22,9 @@ onMounted(() => {
     })
 })
 
+function onDelete(post) {
+  postList.value = postList.value.filter(p => p.id != post.id)
+}
 </script>
 
 <style lang="scss" scoped>
