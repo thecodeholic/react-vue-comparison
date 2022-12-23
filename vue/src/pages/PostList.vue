@@ -1,11 +1,13 @@
 <template>
   <div>
-    <pre>{{ postList }}</pre>
+    <PostItem v-for="post of postList" :key="post.id" :post="post">
+    </PostItem>
   </div>
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue';
+import PostItem from '../components/PostItem.vue';
 
 const postList = ref([])
 
