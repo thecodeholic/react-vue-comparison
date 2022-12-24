@@ -52,21 +52,32 @@ const model = ref({
 
 onMounted(() => {
   fetch("https://jsonplaceholder.typicode.com/posts/" + route.params.id)
-  .then(res => res.json())
-  .then(post => {
-    model.value = post;
-  })
+    .then((res) => res.json())
+    .then((post) => {
+      model.value = post;
+    });
 });
 
 function onSubmit() {
-  fetch("https://jsonplaceholder.typicode.com/posts", {
-    method: "POST",
-    body: JSON.stringify(model.value),
-  })
-    .then((res) => res.json())
-    .then((res) => {
-      router.push("/");
-    });
+  if (model.value.id) {
+    fetch("https://jsonplaceholder.typicode.com/posts/" + model.value.id, {
+      method: "PUT",
+      body: JSON.stringify(model.value),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        router.push("/");
+      });
+  } else {
+    fetch("https://jsonplaceholder.typicode.com/posts", {
+      method: "POST",
+      body: JSON.stringify(model.value),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        router.push("/");
+      });
+  }
 }
 </script>
 

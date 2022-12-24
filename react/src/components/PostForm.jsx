@@ -8,7 +8,7 @@ export default function PostForm() {
     title: "",
     body: "",
   });
-  const params = useParams()
+  const params = useParams();
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/posts/" + params.id)
@@ -21,14 +21,25 @@ export default function PostForm() {
   function onSubmit(ev) {
     ev.preventDefault();
 
-    fetch("https://jsonplaceholder.typicode.com/posts", {
-      method: "POST",
-      body: JSON.stringify(model),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        router.navigate("/");
-      });
+    if (model.id) {
+      fetch("https://jsonplaceholder.typicode.com/posts/" + model.id, {
+        method: "PUT",
+        body: JSON.stringify(model),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          router.navigate("/");
+        });
+    } else {
+      fetch("https://jsonplaceholder.typicode.com/posts", {
+        method: "POST",
+        body: JSON.stringify(model),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          router.navigate("/");
+        });
+    }
   }
 
   return (
@@ -39,7 +50,7 @@ export default function PostForm() {
         </Link>
       </p>
       <form onSubmit={onSubmit}>
-        <h1>{ model.id ? 'Edit Post' : 'Create new Post' }</h1>
+        <h1>{model.id ? "Edit Post" : "Create new Post"}</h1>
         <div className="mb-3">
           <input
             type="text"
