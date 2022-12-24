@@ -1,12 +1,22 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import router from "../router";
 
 export default function PostForm() {
   const [model, setModel] = useState({
+    id: "",
     title: "",
     body: "",
   });
+  const params = useParams()
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/posts/" + params.id)
+      .then((res) => res.json())
+      .then((post) => {
+        setModel(post);
+      });
+  }, []);
 
   function onSubmit(ev) {
     ev.preventDefault();
@@ -29,11 +39,12 @@ export default function PostForm() {
         </Link>
       </p>
       <form onSubmit={onSubmit}>
-        <h1>Create new Post</h1>
+        <h1>{ model.id ? 'Edit Post' : 'Create new Post' }</h1>
         <div className="mb-3">
           <input
             type="text"
             className="form-control"
+            value={model.title}
             onInput={(ev) => setModel({ ...model, title: ev.target.value })}
             placeholder="Post Title"
           />
@@ -42,6 +53,7 @@ export default function PostForm() {
           <textarea
             type="text"
             className="form-control"
+            value={model.body}
             onInput={(ev) => setModel({ ...model, body: ev.target.value })}
             placeholder="Post Body"
           ></textarea>

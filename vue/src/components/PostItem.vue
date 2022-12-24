@@ -4,7 +4,9 @@
       <h5 class="card-title">{{ post.title }}</h5>
       <p class="card-text">{{ post.body }}</p>
       <div class="text-end">
-        <button class="btn btn-primary me-2">Edit</button>
+        <RouterLink :to="`/edit/${post.id}`" class="btn btn-primary me-2"
+          >Edit</RouterLink
+        >
         <button @click="deletePost(post)" class="btn btn-danger">Delete</button>
       </div>
     </div>
@@ -12,29 +14,26 @@
 </template>
 
 <script setup>
-  const props = defineProps({
-    post: {
-      type: Object,
-      required: true
-    }
-  })
+const props = defineProps({
+  post: {
+    type: Object,
+    required: true,
+  },
+});
 
-  const emit = defineEmits(['delete'])
+const emit = defineEmits(["delete"]);
 
-  function deletePost(post) {
-    if (!window.confirm('Are you sure you want to delete post?')) {
-      return;
-    }
-
-    fetch(`https://jsonplaceholder.typicode.com/posts/${post.id}`)
-    .then(res => {
-      if (res.status === 200) {
-        emit('delete', post)
-      }
-    })
+function deletePost(post) {
+  if (!window.confirm("Are you sure you want to delete post?")) {
+    return;
   }
+
+  fetch(`https://jsonplaceholder.typicode.com/posts/${post.id}`).then((res) => {
+    if (res.status === 200) {
+      emit("delete", post);
+    }
+  });
+}
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

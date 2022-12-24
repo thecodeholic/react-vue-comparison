@@ -10,6 +10,10 @@ const routes = [
   {
     path: '/new',
     component: PostForm
+  },
+  {
+    path: '/edit/:id',
+    component: PostForm
   }
 ]
 

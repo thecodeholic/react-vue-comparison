@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 export default function PostItem({
   post, 
@@ -25,7 +26,7 @@ export default function PostItem({
         <h5 className='post-title'>{post.title}</h5>
         <p className='post-body'>{post.body}</p>
         <div className="text-end">
-          <button className="btn btn-primary me-2">Edit</button>
+          <Link to={ `edit/${post.id}` } className="btn btn-primary me-2">Edit</Link>
           <button onClick={() => deletePost(post)} className="btn btn-danger">Delete</button>
         </div>
       </div>

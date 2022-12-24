@@ -6,7 +6,7 @@
       </RouterLink>
     </p>
     <form @submit.prevent="onSubmit">
-      <h1>Create new Post</h1>
+      <h1>{{ model.id ? "Edit Post" : "Create new Post" }}</h1>
       <div class="mb-3">
         <input
           type="text"
@@ -38,13 +38,24 @@
 
 <script setup>
 import { ref } from "@vue/reactivity";
-import { useRouter } from "vue-router";
+import { onMounted } from "@vue/runtime-core";
+import { useRoute, useRouter } from "vue-router";
 
+const route = useRoute();
 const router = useRouter();
 
 const model = ref({
+  id: "",
   title: "",
   body: "",
+});
+
+onMounted(() => {
+  fetch("https://jsonplaceholder.typicode.com/posts/" + route.params.id)
+  .then(res => res.json())
+  .then(post => {
+    model.value = post;
+  })
 });
 
 function onSubmit() {
