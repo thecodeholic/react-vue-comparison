@@ -7,13 +7,18 @@
         <RouterLink :to="`/edit/${post.id}`" class="btn btn-primary me-2"
           >Edit</RouterLink
         >
-        <button @click="deletePost(post)" class="btn btn-danger">Delete</button>
+        <button @click="onDeleteClick(post)" class="btn btn-danger">Delete</button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { useStore } from "vuex";
+
+
+const store = useStore();
+
 const props = defineProps({
   post: {
     type: Object,
@@ -23,16 +28,12 @@ const props = defineProps({
 
 const emit = defineEmits(["delete"]);
 
-function deletePost(post) {
+function onDeleteClick(post) {
   if (!window.confirm("Are you sure you want to delete post?")) {
     return;
   }
 
-  fetch(`https://jsonplaceholder.typicode.com/posts/${post.id}`).then((res) => {
-    if (res.status === 200) {
-      emit("delete", post);
-    }
-  });
+  store.dispatch('deletePost', post.id)
 }
 </script>
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useStateContext } from "../ContextProvider";
 import router from "../router";
 
 export default function PostForm() {
@@ -9,37 +10,19 @@ export default function PostForm() {
     body: "",
   });
   const params = useParams();
+  const { getSinglePost, savePost } = useStateContext();
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/posts/" + params.id)
-      .then((res) => res.json())
-      .then((post) => {
-        setModel(post);
-      });
+    setModel(
+      getSinglePost(params.id)
+    )
   }, []);
 
   function onSubmit(ev) {
     ev.preventDefault();
 
-    if (model.id) {
-      fetch("https://jsonplaceholder.typicode.com/posts/" + model.id, {
-        method: "PUT",
-        body: JSON.stringify(model),
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          router.navigate("/");
-        });
-    } else {
-      fetch("https://jsonplaceholder.typicode.com/posts", {
-        method: "POST",
-        body: JSON.stringify(model),
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          router.navigate("/");
-        });
-    }
+    savePost(model)
+    router.navigate('/')
   }
 
   return (

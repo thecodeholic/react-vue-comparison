@@ -40,7 +40,9 @@
 import { ref } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
 import { useRoute, useRouter } from "vue-router";
+import { useStore } from "vuex";
 
+const store = useStore();
 const route = useRoute();
 const router = useRouter();
 
@@ -50,34 +52,15 @@ const model = ref({
   body: "",
 });
 
-onMounted(() => {
-  fetch("https://jsonplaceholder.typicode.com/posts/" + route.params.id)
-    .then((res) => res.json())
-    .then((post) => {
-      model.value = post;
-    });
+onMounted(async () => {
+  model.value = await store.dispatch('getSinglePost', route.params.id);
 });
 
 function onSubmit() {
-  if (model.value.id) {
-    fetch("https://jsonplaceholder.typicode.com/posts/" + model.value.id, {
-      method: "PUT",
-      body: JSON.stringify(model.value),
+  store.dispatch('savePost', model.value)
+    .then(() => {
+      router.push('/')
     })
-      .then((res) => res.json())
-      .then((res) => {
-        router.push("/");
-      });
-  } else {
-    fetch("https://jsonplaceholder.typicode.com/posts", {
-      method: "POST",
-      body: JSON.stringify(model.value),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        router.push("/");
-      });
-  }
 }
 </script>
 
