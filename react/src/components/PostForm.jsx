@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import router from "../router";
 
 export default function PostForm() {
@@ -22,6 +23,11 @@ export default function PostForm() {
 
   return (
     <div>
+      <p>
+        <Link to="/" className="btn btn-outline-secondary">
+          Back to Posts
+        </Link>
+      </p>
       <form onSubmit={onSubmit}>
         <h1>Create new Post</h1>
         <div className="mb-3">

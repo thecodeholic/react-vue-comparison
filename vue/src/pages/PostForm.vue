@@ -1,5 +1,10 @@
 <template>
   <div>
+    <p>
+      <RouterLink to="/" class="btn btn-outline-secondary">
+        Back to Posts
+      </RouterLink>
+    </p>
     <form @submit.prevent="onSubmit">
       <h1>Create new Post</h1>
       <div class="mb-3">
@@ -19,7 +24,13 @@
         ></textarea>
       </div>
       <p>
-        <button :disabled="!model.title || !model.body" class="btn btn-success" type="submit">Submit</button>
+        <button
+          :disabled="!model.title || !model.body"
+          class="btn btn-success"
+          type="submit"
+        >
+          Submit
+        </button>
       </p>
     </form>
   </div>
@@ -43,7 +54,7 @@ function onSubmit() {
   })
     .then((res) => res.json())
     .then((res) => {
-      router.push('/')
+      router.push("/");
     });
 }
 </script>

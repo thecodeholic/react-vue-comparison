@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react"
-import PostItem from "../components/PostItem.jsx"
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import PostItem from "../components/PostItem.jsx";
 
 export default function PostList() {
   const [postList, setPostList] = useState([]);
@@ -16,16 +17,21 @@ export default function PostList() {
   }, []);
 
   function onDelete(post) {
-    setPostList(
-      postList.filter((p) => p.id != post.id)
-    );
+    setPostList(postList.filter((p) => p.id != post.id));
   }
 
   return (
-    <div>
-      {postList.map((post) => (
-        <PostItem key={post.id} post={post} onDelete={onDelete} />
-      ))}
-    </div>
+    <>
+      <p>
+        <Link to="/new" className="btn btn-success">
+          Add new
+        </Link>
+      </p>
+      <div>
+        {postList.map((post) => (
+          <PostItem key={post.id} post={post} onDelete={onDelete} />
+        ))}
+      </div>
+    </>
   );
 }
