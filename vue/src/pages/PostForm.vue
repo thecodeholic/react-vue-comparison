@@ -2,7 +2,7 @@
   <div>
     <p>
       <RouterLink to="/" class="btn btn-outline-secondary">
-        Back to Posts
+        Go back to list
       </RouterLink>
     </p>
     <form @submit.prevent="onSubmit">
@@ -11,16 +11,16 @@
         <input
           type="text"
           class="form-control"
-          placeholder="Post Title"
           v-model="model.title"
+          placeholder="Post Title"
         />
       </div>
       <div class="mb-3">
         <textarea
           type="text"
           class="form-control"
-          placeholder="Post Body"
           v-model="model.body"
+          placeholder="Post Body"
         ></textarea>
       </div>
       <p>
@@ -37,8 +37,7 @@
 </template>
 
 <script setup>
-import { ref } from "@vue/reactivity";
-import { onMounted } from "@vue/runtime-core";
+import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 
@@ -53,15 +52,17 @@ const model = ref({
 });
 
 onMounted(async () => {
-  model.value = await store.dispatch('getSinglePost', route.params.id);
+  if (!route.params.id) {
+    return;
+  }
+  model.value = await store.dispatch("getSinglePost", route.params.id);
 });
 
 function onSubmit() {
-  store.dispatch('savePost', model.value)
-    .then(() => {
-      router.push('/')
-    })
+  store.dispatch("savePost", model.value).then(() => {
+    router.push("/");
+  });
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style></style>

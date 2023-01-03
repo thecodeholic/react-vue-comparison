@@ -7,18 +7,16 @@
         <RouterLink :to="`/edit/${post.id}`" class="btn btn-primary me-2"
           >Edit</RouterLink
         >
-        <button @click="onDeleteClick(post)" class="btn btn-danger">Delete</button>
+        <button @click="onDeleteClick(post)" class="btn btn-danger">
+          Delete
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useStore } from "vuex";
-
-
-const store = useStore();
-
+import {useStore} from 'vuex'
 const props = defineProps({
   post: {
     type: Object,
@@ -26,6 +24,8 @@ const props = defineProps({
   },
 });
 
+
+const store = useStore();
 const emit = defineEmits(["delete"]);
 
 function onDeleteClick(post) {
@@ -37,4 +37,4 @@ function onDeleteClick(post) {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style></style>

@@ -48,7 +48,7 @@ const store = createStore({
     savePost({ state, commit }, post) {
       let newPosts = state.posts;
       if (post.id) {
-        newPosts = posts.map(p => {
+        newPosts = state.posts.map(p => {
           if (p.id == post.id) {
             return post;
           }

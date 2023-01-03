@@ -7,8 +7,7 @@
       v-for="post of postList"
       :key="post.id"
       :post="post"
-    >
-    </PostItem>
+    />
   </div>
 </template>
 
@@ -18,8 +17,9 @@ import PostItem from "../components/PostItem.vue";
 import { useStore } from "vuex";
 
 const store = useStore();
+
 const postList = computed(() => store.state.posts);
 
 </script>
 
-<style lang="scss" scoped></style>
+<style></style>

@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import PostForm from "./components/PostForm";
+import PostForm from "./pages/PostForm";
 import PostList from "./pages/PostList";
 
 const routes = [

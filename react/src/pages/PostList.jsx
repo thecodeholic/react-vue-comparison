@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import PostItem from "../components/PostItem.jsx";
-import { useStateContext } from "../ContextProvider.jsx";
+import PostItem from "../components/PostItem";
+import { useStateContext } from "../ContextProvider";
 
 export default function PostList() {
-  const { posts } = useStateContext();
+  const { posts } = useStateContext()
 
   return (
     <>
@@ -13,9 +13,10 @@ export default function PostList() {
           Add new
         </Link>
       </p>
+
       <div>
         {posts.map((post) => (
-          <PostItem key={post.id} post={post}/>
+          <PostItem key={post.id} post={post} />
         ))}
       </div>
     </>
